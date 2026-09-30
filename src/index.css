@@ -1,0 +1,57 @@
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  color: var(--text);
+  :root {
+    --crimson: #841617;
+    --acid: #d8f36a;
+    --ink: #191817;
+    --paper: #f4f2ea;
+    --muted: #686560;
+    --line: #d9d6cd;
+
+    color: var(--ink);
+    background: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+
+
+#root {
+  * {
+    box-sizing: border-box;
+  font-weight: 500;
+  color: var(--text-h);
+}
+    min-height: 100vh;
+}
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+    min-width: 320px;
+    min-height: 100vh;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  a:focus-visible,
+  summary:focus-visible {
+    outline: 3px solid var(--crimson);
+    outline-offset: 4px;
+  text-align: center;
