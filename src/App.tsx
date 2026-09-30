@@ -18,6 +18,18 @@ function App() {
 
       <main>
         <section className="hero" id="top">
+          <div className="hero-scene" aria-hidden="true">
+            <img className="hero-photo" src="/autumn-forest.jpg" alt="" />
+            <div className="hero-shade" />
+          </div>
+          <div className="wind-leaves" aria-hidden="true">
+            <span className="wind-leaf leaf--one" />
+            <span className="wind-leaf leaf--two" />
+            <span className="wind-leaf leaf--three" />
+            <span className="wind-leaf leaf--four" />
+            <span className="wind-leaf leaf--five" />
+            <span className="wind-leaf leaf--six" />
+          </div>
           <div className="hero-inner">
             <p className="eyebrow"><span className="live-dot" /> University of Oklahoma · Norman, OK</p>
             <h1>Hacktoberfest<br /><span>at OU.</span></h1>
@@ -26,7 +38,6 @@ function App() {
               <a className="primary-link" href="#about">Explore the event <span aria-hidden="true">↘</span></a>
             </div>
             <span className="hero-mark" aria-hidden="true">10</span>
-            <span className="hero-coordinate" aria-hidden="true">35°12' N<br />97°26' W</span>
           </div>
           <div className="hero-index" aria-hidden="true"><span>01</span><span>OPEN SOURCE, OPEN TO ALL</span><span>OCTOBER</span></div>
         </section>

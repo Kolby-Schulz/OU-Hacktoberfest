@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&display=swap');
 
 :root {
   font-family: 'DM Sans', sans-serif;
@@ -37,7 +37,7 @@ a {
   aspect-ratio: 1;
   background: var(--crimson);
   color: white;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 21px;
   line-height: 1;
 }
@@ -58,7 +58,7 @@ a {
 .site-header nav a:hover,
 .header-link:hover,
 .site-footer a:hover {
-  color: var(--crimson);
+  color: var(--acid);
 }
 
 .header-link span {
@@ -68,19 +68,133 @@ a {
 .hero {
   position: relative;
   overflow: hidden;
-  background-color: var(--crimson);
-  background-image: radial-gradient(rgba(255, 255, 255, 0.15) 0.8px, transparent 0.8px);
-  background-size: 19px 19px;
-  color: white;
+  isolation: isolate;
+  background-color: var(--night);
+  color: var(--ink);
+}
+
+.hero-scene {
+  position: absolute;
+  z-index: -1;
+  inset: -12% 0;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.hero-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 48%;
+  filter: brightness(0.58) saturate(0.78);
+  transform: scale(1.06);
+}
+
+.hero-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(24, 17, 14, 0.91) 0%, rgba(29, 20, 16, 0.72) 46%, rgba(25, 19, 14, 0.32) 100%),
+    linear-gradient(0deg, rgba(22, 17, 14, 0.68), transparent 48%, rgba(22, 17, 14, 0.22));
+}
+
+.wind-leaves {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.wind-leaf {
+  position: absolute;
+  top: -36px;
+  left: var(--leaf-left);
+  width: 15px;
+  height: 24px;
+  border-radius: 90% 0 90% 0;
+  background: var(--leaf-color);
+  opacity: 0.84;
+  box-shadow: 0 2px 12px rgba(20, 12, 8, 0.3);
+  transform: rotate(35deg);
+  animation: leaf-drift var(--leaf-duration) linear var(--leaf-delay) infinite;
+  will-change: transform;
+}
+
+.wind-leaf::after {
+  position: absolute;
+  top: 3px;
+  left: 7px;
+  width: 1px;
+  height: 17px;
+  background: rgba(56, 31, 19, 0.7);
+  content: '';
+  transform: rotate(-15deg);
+}
+
+.leaf--one {
+  --leaf-left: 12%;
+  --leaf-color: #bd673f;
+  --leaf-duration: 18s;
+  --leaf-delay: -12s;
+  --leaf-drift: 23vw;
+}
+
+.leaf--two {
+  --leaf-left: 31%;
+  --leaf-color: #d49a4f;
+  --leaf-duration: 23s;
+  --leaf-delay: -4s;
+  --leaf-drift: 18vw;
+  width: 12px;
+  height: 19px;
+}
+
+.leaf--three {
+  --leaf-left: 52%;
+  --leaf-color: #a64a32;
+  --leaf-duration: 20s;
+  --leaf-delay: -17s;
+  --leaf-drift: 27vw;
+  width: 18px;
+  height: 27px;
+}
+
+.leaf--four {
+  --leaf-left: 70%;
+  --leaf-color: #d1a05a;
+  --leaf-duration: 24s;
+  --leaf-delay: -7s;
+  --leaf-drift: 14vw;
+  width: 13px;
+  height: 21px;
+}
+
+.leaf--five {
+  --leaf-left: 88%;
+  --leaf-color: #bc5d3d;
+  --leaf-duration: 19s;
+  --leaf-delay: -14s;
+  --leaf-drift: 19vw;
+}
+
+.leaf--six {
+  --leaf-left: 43%;
+  --leaf-color: #e2b967;
+  --leaf-duration: 27s;
+  --leaf-delay: -21s;
+  --leaf-drift: 24vw;
+  width: 11px;
+  height: 18px;
 }
 
 .hero-inner {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   max-width: 1280px;
-  min-height: 545px;
+  min-height: 560px;
   margin: 0 auto;
-  padding: 75px 8% 54px;
+  padding: 82px 8% 54px;
   box-sizing: border-box;
 }
 
@@ -96,7 +210,7 @@ a {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: rgba(255, 255, 255, 0.84);
+  color: rgba(245, 232, 212, 0.88);
 }
 
 .live-dot {
@@ -111,7 +225,7 @@ a {
   z-index: 2;
   margin: 38px 0 32px;
   color: white;
-  font-family: 'Barlow Condensed', Impact, sans-serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 104px;
   font-weight: 800;
   line-height: 0.82;
@@ -142,7 +256,7 @@ a {
   flex: 0 0 auto;
   padding: 13px 16px;
   background: var(--acid);
-  color: var(--ink);
+  color: var(--night);
   font-size: 13px;
   font-weight: 700;
   text-decoration: none;
@@ -156,8 +270,9 @@ a {
   position: absolute;
   right: 7%;
   top: 27px;
-  color: rgba(255, 255, 255, 0.09);
-  font-family: 'Barlow Condensed', Impact, sans-serif;
+  z-index: 1;
+  color: rgba(239, 185, 103, 0.13);
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 380px;
   font-weight: 900;
   line-height: 1;
@@ -175,12 +290,12 @@ a {
 
 .hero-index {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   justify-content: space-between;
   padding: 14px 8%;
-  border-top: 1px solid rgba(255, 255, 255, 0.28);
-  color: rgba(255, 255, 255, 0.78);
+  border-top: 1px solid rgba(245, 232, 212, 0.25);
+  color: rgba(245, 232, 212, 0.78);
   font-size: 9px;
   font-weight: 700;
 }
@@ -192,7 +307,7 @@ a {
   align-items: center;
   padding: 30px 8%;
   border-bottom: 1px solid var(--line);
-  background: var(--paper);
+  background: var(--surface);
 }
 
 .fact {
@@ -201,7 +316,7 @@ a {
 }
 
 .fact-label {
-  color: var(--crimson);
+  color: var(--copper);
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
@@ -234,13 +349,13 @@ a {
 
 .section-heading .eyebrow {
   margin-bottom: 21px;
-  color: var(--crimson);
+  color: var(--copper);
 }
 
 .section-heading h2,
 .prizes-inner h2 {
   margin: 0;
-  font-family: 'Barlow Condensed', Impact, sans-serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 66px;
   font-weight: 700;
   line-height: 0.94;
@@ -269,8 +384,8 @@ a {
 .text-link {
   display: inline-block;
   padding-bottom: 5px;
-  border-bottom: 1px solid var(--crimson);
-  color: var(--crimson);
+  border-bottom: 1px solid var(--copper);
+  color: var(--copper);
   font-size: 13px;
   font-weight: 700;
   text-decoration: none;
@@ -281,8 +396,8 @@ a {
 }
 
 .prizes-band {
-  background: var(--ink);
-  color: white;
+  background: var(--forest);
+  color: var(--ink);
 }
 
 .prizes-inner {
@@ -304,7 +419,7 @@ a {
 .prize-note {
   min-width: 220px;
   padding: 20px 0 18px 30px;
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  border-left: 1px solid rgba(245, 232, 212, 0.3);
 }
 
 .prize-star {
@@ -320,7 +435,7 @@ a {
 }
 
 .prize-caption {
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(245, 232, 212, 0.65);
   font-size: 11px;
 }
 
@@ -353,7 +468,7 @@ a {
   content: '+';
   position: absolute;
   right: 4px;
-  color: var(--crimson);
+  color: var(--copper);
   font-size: 20px;
   font-weight: 400;
 }
@@ -414,25 +529,23 @@ a {
   }
 
   .hero-inner {
-    min-height: 510px;
-    padding: 74px 24px 45px;
+    min-height: 490px;
+    padding: 64px 24px 42px;
   }
 
   .hero h1 {
-    margin: 45px 0 30px;
-    font-size: 68px;
+    margin: 42px 0 27px;
+    font-size: 64px;
   }
 
   .hero-mark {
     top: 83px;
     right: -13px;
-    font-size: 240px;
+    font-size: 220px;
   }
 
-  .hero-coordinate {
-    right: 24px;
-    bottom: 22px;
-    font-size: 9px;
+  .hero-photo {
+    object-position: 59% center;
   }
 
   .hero-bottom {
@@ -529,10 +642,44 @@ a {
   }
 
   .hero h1 {
-    font-size: 59px;
+    font-size: 56px;
   }
 
   .hero-index span:nth-child(2) {
     display: none;
+  }
+}
+
+@keyframes leaf-drift {
+  from {
+    transform: translate3d(0, -20px, 0) rotate(0deg);
+  }
+  to {
+    transform: translate3d(var(--leaf-drift), 700px, 0) rotate(520deg);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .hero-scene {
+    animation: forest-parallax 1s linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0px 700px;
+  }
+}
+
+@keyframes forest-parallax {
+  to {
+    transform: translate3d(0, 12%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wind-leaf {
+    display: none;
+  }
+
+  .hero-scene {
+    animation: none !important;
+    transform: none !important;
   }
 }
