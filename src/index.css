@@ -1,18 +1,6 @@
 :root {
-  --crimson: #9f4734;
-  --acid: #eab56b;
-  --copper: #d28a5c;
-  --ink: #f1e4d2;
-  --paper: #1c1713;
-  --surface: #28211b;
-  --forest: #26342b;
-  --night: #17120f;
-  --muted: #b9a995;
-  --line: #47392d;
-
-  color: var(--ink);
-  background: var(--paper);
-  font-family: 'DM Sans', sans-serif;
+  color: #f3e6d0;
+  background: #0c1230;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -35,13 +23,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background: var(--paper);
-}
-
-a:focus-visible,
-summary:focus-visible {
-  outline: 3px solid var(--acid);
-  outline-offset: 4px;
+  background: #0c1230;
 }
 
 @media (prefers-reduced-motion: reduce) {

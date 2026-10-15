@@ -1,0 +1,229 @@
+/*
+  Hacktober landing page styles.
+  Ported from the design handoff (hacktober-landing.zip / index.html) —
+  see README.md in that handoff for the full annotated source and the
+  parallax/keyframe rationale. Colors are literal hex here (matching the
+  handoff); named roles are documented in src/theme.ts.
+*/
+
+.hk-page {
+  position: relative;
+  overflow: hidden;
+  background: #0c1230;
+  color: #f3e6d0;
+  font-family: 'Albert Sans', system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.hk-page a {
+  color: #ffc55a;
+}
+.hk-page a:hover {
+  color: #ffe2a0;
+}
+.hk-page a:focus-visible {
+  outline: 2px solid #ffe2a0;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* .hk-page a.hk-btn (two classes) must outrank the plain .hk-page a link
+   color above, or the button text inherits the yellow link color and
+   disappears against the yellow button background. */
+.hk-page a.hk-btn {
+  background: #ffc55a;
+  color: #0c1230;
+}
+.hk-page a.hk-btn:hover {
+  background: #ffe2a0;
+  color: #0c1230;
+}
+.hk-page a.hk-ghost {
+  color: #f3e6d0;
+}
+.hk-page a.hk-ghost:hover {
+  color: #ffe2a0;
+}
+
+.hk-hero {
+  --hk-h: clamp(720px, 61.1vw, 1240px);
+  height: var(--hk-h);
+}
+.hk-close {
+  --hk-c: clamp(760px, 56vw, 1100px);
+  min-height: var(--hk-c);
+}
+
+.hk-grain {
+  background-image: url(/grain.png);
+  background-size: 256px 256px;
+}
+
+.hk-layer {
+  will-change: transform;
+}
+
+.hk-fade {
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0,
+    #000 340px,
+    #000 calc(100% - 420px),
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0,
+    #000 340px,
+    #000 calc(100% - 420px),
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+@keyframes hk-drift-a {
+  0% {
+    transform: translate(-40px, -10px) rotate(-20deg);
+    opacity: 0;
+  }
+  12% {
+    transform: translate(0, 0) rotate(20deg);
+    opacity: 1;
+  }
+  35% {
+    transform: translate(80px, 34px) rotate(110deg);
+  }
+  58% {
+    transform: translate(170px, 22px) rotate(205deg);
+  }
+  85% {
+    transform: translate(262px, 84px) rotate(300deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(320px, 120px) rotate(360deg);
+    opacity: 0;
+  }
+}
+@keyframes hk-drift-b {
+  0% {
+    transform: translate(-50px, 6px) rotate(30deg);
+    opacity: 0;
+  }
+  12% {
+    transform: translate(0, 0) rotate(-10deg);
+    opacity: 1;
+  }
+  32% {
+    transform: translate(96px, -22px) rotate(-95deg);
+  }
+  60% {
+    transform: translate(204px, 38px) rotate(-190deg);
+  }
+  86% {
+    transform: translate(312px, 64px) rotate(-280deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(372px, 112px) rotate(-340deg);
+    opacity: 0;
+  }
+}
+@keyframes hk-sway {
+  0% {
+    transform: rotate(-1.5deg);
+  }
+  100% {
+    transform: rotate(1.5deg);
+  }
+}
+@keyframes hk-pulse {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+/* Gentle flutter for the leaves on the closing/spring scene — they keep
+   their drawn position and base tilt (set via the SVG transform attribute
+   on the <use> itself) and just drift a few px on top of that. */
+@keyframes hk-leaf-float-a {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(5px, -9px) rotate(6deg);
+  }
+  50% {
+    transform: translate(-4px, -3px) rotate(-5deg);
+  }
+  75% {
+    transform: translate(7px, 5px) rotate(4deg);
+  }
+}
+@keyframes hk-leaf-float-b {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  30% {
+    transform: translate(-7px, 7px) rotate(-6deg);
+  }
+  65% {
+    transform: translate(5px, -6px) rotate(5deg);
+  }
+}
+
+.hk-leaf-a {
+  animation: hk-drift-a 8s ease-in-out infinite;
+}
+.hk-leaf-b {
+  animation: hk-drift-b 10.5s ease-in-out infinite;
+}
+.hk-sway-a {
+  animation: hk-sway 6.5s ease-in-out infinite alternate;
+  transform-origin: 50% 0;
+}
+.hk-sway-b {
+  animation: hk-sway 8s ease-in-out -3s infinite alternate;
+  transform-origin: 50% 0;
+}
+.hk-sway-c {
+  animation: hk-sway 7.2s ease-in-out -1.5s infinite alternate;
+  transform-origin: 50% 0;
+}
+.hk-glint {
+  animation: hk-pulse 4.5s ease-in-out infinite;
+}
+.hk-leaf-float-a {
+  animation: hk-leaf-float-a 7s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.hk-leaf-float-b {
+  animation: hk-leaf-float-b 9s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@media (max-width: 760px) {
+  .hk-wide {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hk-leaf-a,
+  .hk-leaf-b,
+  .hk-sway-a,
+  .hk-sway-b,
+  .hk-sway-c,
+  .hk-glint,
+  .hk-leaf-float-a,
+  .hk-leaf-float-b {
+    animation: none;
+  }
+}
