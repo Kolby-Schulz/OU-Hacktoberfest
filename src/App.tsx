@@ -80,6 +80,28 @@ const LAMP_POSTS = [
   { x: 436, y: 642, w: 100, h: 130 },
 ]
 
+// Ground fog. Each FogLayer is its own data-depth scene layer dropped between
+// two tree layers (see where these are used in Hero), so the haze actually
+// sits in front of the trees behind it and behind the trees in front of it,
+// instead of just washing over the whole image. Each one is a single
+// oversized, feathered-edge band (not separate blobs) so it reads as one
+// continuous bank of fog rolling through, not distinct shapes moving past
+// each other - it's sized well past 100% width so it still fully covers the
+// scene at both ends of its drift.
+const FOG_LOW = { top: '54%', height: '170px', opacity: 0.6, drift: 'hk-fog-drift-a' }
+const FOG_HIGH = { top: '60%', height: '190px', opacity: 0.68, drift: 'hk-fog-drift-b' }
+
+type Fog = { top: string; height: string; opacity: number; drift: string }
+
+function FogLayer({ fog }: { fog: Fog }) {
+  return (
+    <div
+      className={`hk-fog ${fog.drift}`}
+      style={{ top: fog.top, height: fog.height, opacity: fog.opacity }}
+    />
+  )
+}
+
 // ---------------------------------------------------------------------------
 // Shared styles
 // ---------------------------------------------------------------------------
@@ -122,27 +144,38 @@ function Sprite() {
       <defs>
         <symbol id="hk-tr-oval" viewBox="0 0 80 200">
           <rect x="37" y="112" width="6" height="88" fill="currentColor" />
-          <ellipse cx="40" cy="72" rx="36" ry="70" />
-          <ellipse cx="52" cy="54" rx="14" ry="36" fill="#ffffff" opacity="0.1" />
+          <ellipse cx="34" cy="58" rx="28" ry="52" />
+          <ellipse cx="50" cy="80" rx="26" ry="48" />
+          <ellipse cx="38" cy="106" rx="23" ry="38" />
+          <ellipse cx="50" cy="46" rx="12" ry="30" fill="#ffffff" opacity="0.12" />
+          <ellipse cx="26" cy="100" rx="13" ry="24" fill="#000000" opacity="0.08" />
         </symbol>
         <symbol id="hk-tr-leaf" viewBox="0 0 80 220">
           <rect x="37" y="150" width="6" height="70" fill="currentColor" />
-          <path d="M40 2 C70 52 78 112 40 172 C2 112 10 52 40 2Z" />
-          <path d="M46 30 C62 66 66 106 48 148 C56 104 54 64 46 30Z" fill="#ffffff" opacity="0.14" />
+          <ellipse cx="40" cy="38" rx="21" ry="36" />
+          <ellipse cx="40" cy="86" rx="29" ry="46" />
+          <ellipse cx="40" cy="138" rx="25" ry="38" />
+          <ellipse cx="48" cy="28" rx="10" ry="22" fill="#ffffff" opacity="0.14" />
+          <ellipse cx="29" cy="130" rx="12" ry="22" fill="#000000" opacity="0.08" />
         </symbol>
         <symbol id="hk-tr-round" viewBox="0 0 120 180">
           <rect x="57" y="104" width="6" height="76" fill="currentColor" />
-          <path d="M60 128 L44 106 M60 138 L78 112" stroke="currentColor" strokeWidth="3" fill="none" />
-          <circle cx="60" cy="62" r="58" />
-          <circle cx="76" cy="44" r="28" fill="#ffffff" opacity="0.1" />
+          <circle cx="42" cy="58" r="37" />
+          <circle cx="78" cy="52" r="41" />
+          <circle cx="58" cy="90" r="35" />
+          <circle cx="80" cy="36" r="18" fill="#ffffff" opacity="0.12" />
+          <circle cx="32" cy="90" r="16" fill="#000000" opacity="0.08" />
+          {/* Branch marks drawn last so the canopy circles above don't paint over - and cut off - the part that should reach into the leaves. */}
+          <path d="M60 128 L40 98 M60 138 L72 100" stroke="currentColor" strokeWidth="3" fill="none" />
         </symbol>
         <symbol id="hk-tr-cloud" viewBox="0 0 160 180">
-          <rect x="76" y="104" width="8" height="76" fill="currentColor" />
-          <path d="M80 132 L58 104 M80 140 L104 110" stroke="currentColor" strokeWidth="4" fill="none" />
+          {/* Extended up to y=92 (not 104) so the straight run of the trunk - between the two angled branches - actually reaches into the canopy circles instead of stopping short of all three. */}
+          <rect x="76" y="92" width="8" height="88" fill="currentColor" />
           <circle cx="50" cy="72" r="42" />
           <circle cx="90" cy="52" r="48" />
           <circle cx="118" cy="80" r="38" />
           <circle cx="102" cy="40" r="24" fill="#ffffff" opacity="0.1" />
+          <path d="M80 132 L56 98 M80 140 L106 98" stroke="currentColor" strokeWidth="4" fill="none" />
         </symbol>
         <symbol id="hk-spark" viewBox="0 0 24 24">
           <path d="M12 0 C12.8 8 16 11.2 24 12 C16 12.8 12.8 16 12 24 C11.2 16 8 12.8 0 12 C8 11.2 11.2 8 12 0Z" />
@@ -232,6 +265,11 @@ function Hero() {
         </svg>
       </div>
 
+      {/* Fog drifting between the far and mid ridges - behind the mid ridge, in front of the far one */}
+      <div data-depth="0.3" className="hk-layer" aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 3, pointerEvents: 'none' }}>
+        <FogLayer fog={FOG_LOW} />
+      </div>
+
       {/* Mid ridge */}
       <div data-depth="0.16" className="hk-layer" aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 4 }}>
         <svg viewBox="0 0 1440 880" preserveAspectRatio="xMidYMax slice" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', color: '#12143a' }}>
@@ -250,31 +288,18 @@ function Hero() {
         </svg>
       </div>
 
-      {/* Ground: glow beams, drifting leaves, three near trees, silhouette with laptop glow */}
+      {/* Fog drifting between the mid ridge and the near ground trees - behind the ground layer, in front of the mid ridge */}
+      <div data-depth="0.16" className="hk-layer" aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 4, pointerEvents: 'none' }}>
+        <FogLayer fog={FOG_HIGH} />
+      </div>
+
+      {/* Ground: three near trees */}
       <div data-depth="0" className="hk-layer" aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 5 }}>
         <svg viewBox="0 0 1440 880" preserveAspectRatio="xMidYMax slice" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', color: '#070a1e' }}>
-          <polygon points="567,745 577,769 545,-40 215,-40" fill="#ffcf7a" opacity="0.1" />
-          <polygon points="569,748 576,765 500,-40 330,-40" fill="#ffcf7a" opacity="0.07" />
-          <g fill="#ffd98a">
-            <use href="#hk-leaf" x="463" y="551" width="14" height="19" transform="rotate(35 470 560)" />
-            <use href="#hk-leaf" x="498" y="461" width="13" height="17" transform="rotate(-25 505 470)" />
-            <use href="#hk-leaf" x="446" y="412" width="12" height="16" transform="rotate(60 452 420)" />
-            <use href="#hk-leaf" x="412" y="172" width="12" height="16" transform="rotate(-40 418 180)" />
-            <use href="#hk-leaf" x="464" y="102" width="11" height="15" transform="rotate(20 470 110)" />
-            <use href="#hk-leaf" x="366" y="52" width="12" height="16" transform="rotate(70 372 60)" />
-            <use href="#hk-spark" x="481" y="635" width="10" height="10" />
-            <use href="#hk-spark" x="434" y="144" width="12" height="12" />
-          </g>
           <use href="#hk-tr-leaf" x="255" y="524" width="90" height="250" fill={COLORS.maple} />
           <use href="#hk-tr-cloud" x="735" y="448" width="270" height="304" fill="#c75a2a" />
           <use href="#hk-tr-oval" x="1208" y="594" width="84" height="210" fill="#1a1f55" />
           <path d="M0 792 C150 768 330 762 500 778 C600 788 650 748 740 742 C860 734 940 772 1060 792 C1180 810 1330 786 1440 796 V880 H0Z" fill="#0c1230" />
-          <g transform="translate(620 772) scale(1.6)">
-            <circle cx="-30" cy="-9.5" r="26" fill={COLORS.lantern} opacity="0.16" />
-            <circle cx="-30" cy="-9.5" r="14" fill={COLORS.lantern} opacity="0.22" />
-            <rect x="-27" y="-3" width="17" height="2.4" rx="1" fill="#9aa3c7" />
-            <path d="M-27 -2 L-33 -17" stroke={COLORS.glow} strokeWidth="3" strokeLinecap="round" fill="none" />
-          </g>
         </svg>
       </div>
 

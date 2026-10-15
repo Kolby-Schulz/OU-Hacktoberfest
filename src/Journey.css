@@ -209,6 +209,59 @@
   transform-origin: center;
 }
 
+/* Ground fog: one oversized, soft-edged band dropped between tree layers (not
+   on top of everything), so it genuinely sits in front of the trees behind it
+   and behind the trees in front - real depth, not a flat haze overlay. It's a
+   single continuous strip (feathered left/right via the gradient, not a
+   border-radius blob) so it reads as one bank of fog rolling through rather
+   than separate shapes drifting past each other; left/width overshoot 100%
+   so it still fully covers the scene at the far end of its drift. */
+.hk-fog {
+  position: absolute;
+  left: -55%;
+  width: 210%;
+  filter: blur(38px);
+  background: linear-gradient(
+    90deg,
+    rgba(243, 230, 208, 0) 0%,
+    rgba(243, 230, 208, 0.8) 22%,
+    rgba(243, 230, 208, 0.95) 50%,
+    rgba(243, 230, 208, 0.8) 78%,
+    rgba(243, 230, 208, 0) 100%
+  );
+  mix-blend-mode: screen;
+  pointer-events: none;
+  will-change: transform;
+}
+@keyframes hk-fog-drift-a {
+  0% {
+    transform: translate(-38%, 0) scale(1);
+  }
+  50% {
+    transform: translate(32%, -8%) scale(1.16);
+  }
+  100% {
+    transform: translate(-38%, 0) scale(1);
+  }
+}
+@keyframes hk-fog-drift-b {
+  0% {
+    transform: translate(28%, 6%) scale(1.14);
+  }
+  50% {
+    transform: translate(-36%, -5%) scale(0.88);
+  }
+  100% {
+    transform: translate(28%, 6%) scale(1.14);
+  }
+}
+.hk-fog-drift-a {
+  animation: hk-fog-drift-a 15s ease-in-out infinite;
+}
+.hk-fog-drift-b {
+  animation: hk-fog-drift-b 19s ease-in-out infinite;
+}
+
 @media (max-width: 760px) {
   .hk-wide {
     display: none !important;
@@ -223,7 +276,9 @@
   .hk-sway-c,
   .hk-glint,
   .hk-leaf-float-a,
-  .hk-leaf-float-b {
+  .hk-leaf-float-b,
+  .hk-fog-drift-a,
+  .hk-fog-drift-b {
     animation: none;
   }
 }
