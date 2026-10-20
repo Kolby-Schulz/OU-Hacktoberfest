@@ -336,12 +336,6 @@ function Hero() {
         </div>
       </nav>
 
-      <div style={{ position: 'absolute', left: 'clamp(20px, 5.5vw, 80px)', bottom: 26, zIndex: 8, display: 'flex', alignItems: 'center', gap: 10, fontFamily: "'Fragment Mono', ui-monospace, monospace", fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', color: COLORS.caption }}>
-        <svg aria-hidden="true" width="14" height="18" viewBox="0 0 14 18" fill="none" stroke={COLORS.lantern} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M7 1 V16 M1.5 10.5 L7 16 L12.5 10.5" />
-        </svg>
-        Scroll to walk the trail
-      </div>
     </section>
   )
 }
@@ -402,7 +396,6 @@ function MidScene() {
 
       <section id="details" style={{ position: 'relative', zIndex: 2, boxSizing: 'border-box', minHeight: 1040, maxWidth: 1400, margin: '0 auto', padding: '130px clamp(20px, 5.5vw, 80px) 190px' }}>
         <div style={{ maxWidth: 640, display: 'flex', flexDirection: 'column', gap: 18 }}>
-          <div style={eyebrowStyle}>The details</div>
           <h2 style={h2Style}>Follow the <em style={{ fontStyle: 'italic', color: COLORS.lantern }}>lanterns.</em></h2>
         </div>
 
