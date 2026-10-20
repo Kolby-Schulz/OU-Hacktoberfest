@@ -1,75 +1,36 @@
-# React + TypeScript + Vite
+# Hacktober — Hacklahoma Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The landing page for **Hacktober**, Hacklahoma's fall hackathon at the University of Oklahoma. A single-scroll, animated autumn/night scene (parallax trees, drifting leaves, lantern details) built with React + Vite.
 
-Currently, two official plugins are available:
+- **Event:** Oct 26, 2026 · 4–10 PM — REPF 200, University of Oklahoma
+- **Host:** [Hacklahoma](https://hacklahoma.org)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Getting started
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```sh
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Other scripts:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```sh
+npm run build    # type-check and build for production
+npm run preview  # preview the production build locally
+npm run lint     # run ESLint
 ```
+
+## Project structure
+
+- [src/App.tsx](src/App.tsx) — the entire page: hero scene, parallax scenery, lantern details section, and footer/CTA
+- [src/main.tsx](src/main.tsx) — React entry point
+- [index.html](index.html) — page shell, meta tags, and font imports
+- [public/](public) — static assets (e.g. the Hacklahoma logo)
+
+Event details (date, venue, contact email) are defined as constants near the top of [src/App.tsx](src/App.tsx) — update those to change copy across the whole page.
+
+## Tech stack
+
+- React 19 + TypeScript
+- Vite
+- ESLint (flat config)
