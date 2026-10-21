@@ -598,7 +598,7 @@ function Footer() {
         <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="hk-ghost" style={{ textDecoration: 'none' }}>Discord</a>
         <a href={EVENT_PAGE_URL} target="_blank" rel="noopener noreferrer" className="hk-ghost" style={{ textDecoration: 'none' }}>Event listing</a>
       </div>
-      <img src="/hacklahoma-logo.png" alt="Hacklahoma" style={{ height: 24, width: 'auto', opacity: 0.9 }} />
+      <img src={`${import.meta.env.BASE_URL}hacklahoma-logo.png`} alt="Hacklahoma" style={{ height: 24, width: 'auto', opacity: 0.9 }} />
     </footer>
   )
 }
@@ -637,7 +637,7 @@ function App() {
       <MidScene />
       <SpringScene />
       <Footer />
-      <div className="hk-grain" aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 50, pointerEvents: 'none', opacity: 0.9 }} />
+      <div className="hk-grain" aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 50, pointerEvents: 'none', opacity: 0.9, backgroundImage: `url(${import.meta.env.BASE_URL}grain.png)` }} />
     </div>
   )
 }
