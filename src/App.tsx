@@ -353,7 +353,7 @@ function Hero() {
         ))}
       </div>
 
-      <nav aria-label="Main" style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 8, boxSizing: 'border-box', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end', gap: '8px 24px', padding: '18px calc(clamp(20px, 5.5vw, 80px) + 110px) 18px clamp(20px, 5.5vw, 80px)' }}>
+      <nav aria-label="Main" style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 8, boxSizing: 'border-box', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end', gap: '8px 24px', padding: '18px calc(clamp(20px, 5.5vw, 80px) + clamp(60px, 10vw, 100px) + 16px) 18px clamp(20px, 5.5vw, 80px)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px 28px' }}>
           <a href="#details" className="hk-ghost hk-wide" style={navLinkStyle}>Details</a>
           <a href="#schedule" className="hk-ghost hk-wide" style={navLinkStyle}>Schedule</a>
