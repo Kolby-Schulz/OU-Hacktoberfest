@@ -8,10 +8,11 @@ import { COLORS } from './theme'
 // real event details; everything else (illustration data) is layout, not copy.
 // ---------------------------------------------------------------------------
 
-// Doors open at 4 PM; the official build window ("event time") is 5-10 PM,
-// so that 5-hour window is what EVENT_HOURS below reflects.
-const EVENT_DATE = 'Oct 26, 2026 · 4–10 PM'
-const EVENT_VENUE = 'REPF 200, University of Oklahoma'
+// Doors open and check-in start at 5 PM; the build window runs 5:30-9 PM
+// inside that, so the 5-hour span is what EVENT_HOURS below reflects.
+const EVENT_DATE = 'Oct 26, 2026 · 5–10 PM'
+const EVENT_VENUE = 'REPF, University of Oklahoma'
+const EVENT_ADDRESS = 'Rawl Engineering Practice Facility, 850 S Jenkins Ave, Norman, OK 73019'
 const EVENT_HOURS = '5'
 const ORG_NAME = 'Hacklahoma'
 const CONTACT_EMAIL = 'hacklahoma@ou.edu'
@@ -20,7 +21,31 @@ const CONTACT_EMAIL = 'hacklahoma@ou.edu'
 const SPRING_HACKATHON_NAME = ORG_NAME
 const SPRING_DATE = 'Feb 6–7, 2027'
 
-const WHO_CAN_JOIN = 'Open to everyone'
+// This location's MLH listing restricts attendance to university students.
+const WHO_CAN_JOIN = 'OU students'
+
+// Pulled from the published MLH event listing.
+const DISCORD_URL = 'https://discord.gg/6hQ2uva9n'
+const REGISTER_URL = 'https://www.mlh.com/signin?return_to=https://events.mlh.com/auth/callback/participant'
+const EVENT_PAGE_URL = 'https://events.mlh.com/events/15581-hacktoberfest-hack-day-norman-x-hacklahoma'
+
+const HIGHLIGHTS = [
+  'A fun, beginner-friendly mini hackathon',
+  'Free food to keep you fueled throughout the evening',
+  'Prizes for participants',
+  'Opportunities to collaborate, learn, and connect with fellow students',
+]
+
+const SCHEDULE = [
+  { time: '5:00 PM', label: 'Doors open, check-in' },
+  { time: '5:15 PM', label: 'Opening ceremony and welcome' },
+  { time: '5:30 PM', label: 'Hacking begins' },
+  { time: '6:30 PM', label: 'Dinner and social time' },
+  { time: '9:00 PM', label: 'Projects due' },
+  { time: '9:15 PM', label: 'Project demos and showcase' },
+  { time: '9:40 PM', label: 'Closing ceremony, winners, and prizes' },
+  { time: '10:00 PM', label: 'Event ends' },
+]
 
 // This hackathon doesn't announce tracks/themes until the day of, so the
 // three lanterns carry the When/Where/Who facts instead (there's no
@@ -328,11 +353,13 @@ function Hero() {
         ))}
       </div>
 
-      <nav aria-label="Main" style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 8, boxSizing: 'border-box', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end', gap: '8px 24px', padding: '18px clamp(20px, 5.5vw, 80px)' }}>
+      <nav aria-label="Main" style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 8, boxSizing: 'border-box', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end', gap: '8px 24px', padding: '18px calc(clamp(20px, 5.5vw, 80px) + 110px) 18px clamp(20px, 5.5vw, 80px)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px 28px' }}>
           <a href="#details" className="hk-ghost hk-wide" style={navLinkStyle}>Details</a>
+          <a href="#schedule" className="hk-ghost hk-wide" style={navLinkStyle}>Schedule</a>
+          <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="hk-ghost hk-wide" style={navLinkStyle}>Discord</a>
           <a href="#spring" className="hk-ghost hk-wide" style={navLinkStyle}>Spring</a>
-          <a href="#register" className="hk-btn" style={{ ...navLinkStyle, boxSizing: 'border-box', padding: '0 22px', borderRadius: 999, fontWeight: 600 }}>Register</a>
+          <a href={REGISTER_URL} target="_blank" rel="noopener noreferrer" className="hk-btn" style={{ ...navLinkStyle, boxSizing: 'border-box', padding: '0 22px', borderRadius: 999, fontWeight: 600 }}>Register</a>
         </div>
       </nav>
 
@@ -394,9 +421,24 @@ function MidScene() {
         <div className="hk-leaf-a" style={{ position: 'absolute', left: '16%', top: '80%', width: 18, height: 18, borderRadius: '2px 70% 2px 70%', background: COLORS.rust, animationDelay: '-10s' }} />
       </div>
 
-      <section id="details" style={{ position: 'relative', zIndex: 2, boxSizing: 'border-box', minHeight: 1040, maxWidth: 1400, margin: '0 auto', padding: '130px clamp(20px, 5.5vw, 80px) 190px' }}>
+      <section id="details" style={{ position: 'relative', zIndex: 2, boxSizing: 'border-box', minHeight: 1040, maxWidth: 1400, margin: '0 auto', padding: '130px clamp(20px, 5.5vw, 80px) 90px' }}>
         <div style={{ maxWidth: 640, display: 'flex', flexDirection: 'column', gap: 18 }}>
           <h2 style={h2Style}>Follow the <em style={{ fontStyle: 'italic', color: COLORS.lantern }}>lanterns.</em></h2>
+          <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6, color: COLORS.body }}>
+            Whether you're an experienced developer or just getting started, this is a great opportunity to explore
+            new ideas, work on a fun project, meet fellow students, and enjoy a relaxed evening of creativity and
+            collaboration. Come hang out, connect with other students, and celebrate the spirit of open-source
+            development!
+          </p>
+          <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {HIGHLIGHTS.map((item) => (
+              <li key={item} style={{ display: 'flex', alignItems: 'baseline', gap: 10, fontSize: 17, lineHeight: 1.5, color: COLORS.body }}>
+                <svg aria-hidden="true" viewBox="0 0 24 24" style={{ flexShrink: 0, width: 12, height: 12, color: COLORS.lantern }}><use href="#hk-spark" fill="currentColor" /></svg>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: COLORS.caption }}>{EVENT_ADDRESS}</p>
         </div>
 
         <svg aria-hidden="true" viewBox="0 0 1240 96" preserveAspectRatio="xMidYMid slice" style={{ position: 'relative', zIndex: 2, display: 'block', width: '100%', height: 96, marginTop: 48, overflow: 'visible' }}>
@@ -422,6 +464,19 @@ function MidScene() {
               <div aria-hidden="true" style={{ width: 8, height: 8, background: '#ee8f37', transform: 'rotate(45deg)' }} />
             </div>
           ))}
+        </div>
+
+        <div id="schedule" style={{ position: 'relative', zIndex: 1, marginTop: 90, maxWidth: 560 }}>
+          <div style={eyebrowStyle}>Run of the evening</div>
+          <h2 style={{ ...h2Style, fontSize: 'clamp(30px, 3.2vw, 44px)', marginTop: 14, marginBottom: 32 }}>Schedule</h2>
+          <ol style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {SCHEDULE.map((item) => (
+              <li key={item.time} style={{ display: 'flex', alignItems: 'baseline', gap: 24, borderTop: '1px solid rgba(246,234,214,0.14)', paddingTop: 16 }}>
+                <span style={{ flexShrink: 0, width: 92, fontFamily: "'Fragment Mono', ui-monospace, monospace", fontSize: 14, letterSpacing: '0.04em', color: COLORS.lantern }}>{item.time}</span>
+                <span style={{ fontSize: 17, lineHeight: 1.4, color: COLORS.body }}>{item.label}</span>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
@@ -521,12 +576,12 @@ function SpringScene() {
 
       <div style={{ position: 'relative', zIndex: 6, boxSizing: 'border-box', maxWidth: 1400, margin: '0 auto', padding: 'clamp(64px, 7vw, 120px) clamp(20px, 5.5vw, 80px) 0' }}>
         <div style={{ maxWidth: 620, display: 'flex', flexDirection: 'column', gap: 18 }}>
-          <div style={eyebrowStyle}>After the leaves</div>
           <h2 style={h2Style}>Same night sky. <em style={{ fontStyle: 'italic', color: COLORS.lantern }}>Next season.</em></h2>
           <p style={{ margin: 0, fontSize: 19, lineHeight: 1.6, color: '#e1dcec' }}>Hacktober is the fall chapter of {SPRING_HACKATHON_NAME}, Oklahoma's largest hackathon. The trail you start here runs through winter and comes out the other side on {SPRING_DATE}.</p>
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px 28px', marginTop: 10 }}>
-            <a id="register" href="#register" className="hk-btn" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 52, boxSizing: 'border-box', padding: '0 30px', borderRadius: 999, fontSize: 17, fontWeight: 600, textDecoration: 'none' }}>Register for Hacktober</a>
-            <a href="#spring" className="hk-ghost" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 17, fontWeight: 500, textUnderlineOffset: '5px' }}>About {SPRING_HACKATHON_NAME}</a>
+            <a id="register" href={REGISTER_URL} target="_blank" rel="noopener noreferrer" className="hk-btn" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 52, boxSizing: 'border-box', padding: '0 30px', borderRadius: 999, fontSize: 17, fontWeight: 600, textDecoration: 'none' }}>Register for Hacktober</a>
+            <a href={EVENT_PAGE_URL} target="_blank" rel="noopener noreferrer" className="hk-ghost" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 17, fontWeight: 500, textUnderlineOffset: '5px' }}>Full event listing</a>
+            <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="hk-ghost" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 17, fontWeight: 500, textUnderlineOffset: '5px' }}>Join the Discord</a>
           </div>
         </div>
       </div>
@@ -538,11 +593,35 @@ function Footer() {
   return (
     <footer style={{ position: 'relative', zIndex: 2, boxSizing: 'border-box', minHeight: 120, padding: '28px clamp(20px, 5.5vw, 80px) 36px', background: '#0a1030', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '8px 32px' }}>
       <div style={{ fontFamily: "'Cormorant', Georgia, serif", fontStyle: 'italic', fontSize: 22, color: COLORS.parchment }}>hacktober</div>
-      <div style={{ fontFamily: "'Fragment Mono', ui-monospace, monospace", fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', color: COLORS.caption }}>
-        {ORG_NAME} · <a href={`mailto:${CONTACT_EMAIL}`} className="hk-ghost" style={{ textDecoration: 'none' }}>{CONTACT_EMAIL}</a>
+      <div style={{ fontFamily: "'Fragment Mono', ui-monospace, monospace", fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', color: COLORS.caption, display: 'flex', flexWrap: 'wrap', gap: '6px 18px' }}>
+        <span>{ORG_NAME} · <a href={`mailto:${CONTACT_EMAIL}`} className="hk-ghost" style={{ textDecoration: 'none' }}>{CONTACT_EMAIL}</a></span>
+        <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="hk-ghost" style={{ textDecoration: 'none' }}>Discord</a>
+        <a href={EVENT_PAGE_URL} target="_blank" rel="noopener noreferrer" className="hk-ghost" style={{ textDecoration: 'none' }}>Event listing</a>
       </div>
       <img src="/hacklahoma-logo.png" alt="Hacklahoma" style={{ height: 24, width: 'auto', opacity: 0.9 }} />
     </footer>
+  )
+}
+
+// MLH's official trust badge — asset + embed markup provided by MLH
+// (brand-guidelines page), not something we design. Pinned flush to the
+// true top-right corner (top:0, as MLH intends); the nav row reserves
+// space to its left instead of the badge floating below it.
+function MlhBadge() {
+  return (
+    <a
+      id="mlh-trust-badge"
+      style={{ display: 'block', maxWidth: 100, minWidth: 60, position: 'fixed', right: 'clamp(20px, 5.5vw, 80px)', top: 0, width: '10%', zIndex: 10000 }}
+      href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2027-season&utm_content=blue"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img
+        src="https://logged-assets.s3.amazonaws.com/trust-badge/2027/mlh-trust-badge-2027-blue.svg"
+        alt="Major League Hacking 2027 Hackathon Season"
+        style={{ width: '100%' }}
+      />
+    </a>
   )
 }
 
@@ -553,6 +632,7 @@ function App() {
   return (
     <div ref={rootRef} data-hk-root="1" id="top" className="hk-page" style={{ position: 'relative' }}>
       <Sprite />
+      <MlhBadge />
       <Hero />
       <MidScene />
       <SpringScene />
